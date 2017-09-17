@@ -25,9 +25,9 @@ crc32(concat(t.weekStartDate,t.weekStartDate,t.timesheetStatus,t.employeeId)),
 t.weekEndDate, 
 t.timesheetStatus,
 t.employeeId, 
- t.timesheetSequence FROM hrdb.timesheet t  where t.timesheetSequence is  null;
+ t.timesheetSequence FROM timesheet t  where t.timesheetSequence is  null;
  
  
- update  hrdb.timesheet t set t.timesheetSequence = crc32(concat(t.weekStartDate,t.weekStartDate,t.timesheetStatus,t.employeeId))
+ update  timesheet t set t.timesheetSequence = crc32(concat(t.weekStartDate,t.weekStartDate,t.timesheetStatus,t.employeeId))
  where t.timesheetSequence is  null
 
