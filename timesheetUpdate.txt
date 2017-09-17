@@ -1,0 +1,19 @@
+use hr_uat;
+alter table timesheet add column timesheetSequence BIGINT;
+
+drop view if exists timesheetSummary;
+
+create view timesheetSummary as (
+select e.employeeId as employeeId, e.firstName as firstName,
+ e.lastName as lastName, t.weekStartDate as weekStartDate, t.weekEndDate as 
+ weekEndDate, sum(t.taskHours) as totalhours, t.timesheetStatus 
+ as timesheetStatus, t.createdDate as createdDate, t.timesheetSequence as timesheetSequence
+
+from timesheet t, Employee e
+where t.employeeId = e.employeeId 
+group by t.employeeId, t.weekStartDate,t.timesheetstatus order by t.weekStartDate desc
+);
+
+ 
+ update  timesheet t set t.timesheetSequence = crc32(concat(t.weekStartDate,t.weekStartDate,t.timesheetStatus,t.employeeId))
+ where t.timesheetSequence is  null
